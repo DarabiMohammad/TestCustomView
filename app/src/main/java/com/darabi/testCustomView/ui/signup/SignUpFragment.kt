@@ -29,7 +29,12 @@ class SignUpFragment @Inject constructor() : BaseFragment(), Observer<ResponseWr
     override fun onChanged(response: ResponseWrapper<Boolean>) {
         when (response) {
 
-            is ResponseWrapper.Data -> mainViewModel.onSigndUp.value = response.data
+            is ResponseWrapper.Data -> {
+                if (response.data)
+                    mainViewModel.onSigndUp.value = Unit
+                else
+                    showToast(getString(R.string.sign_up_failed))
+            }
             is ResponseWrapper.Error -> showToast("${response.error.message}")
         }
     }

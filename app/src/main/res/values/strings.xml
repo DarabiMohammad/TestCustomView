@@ -12,5 +12,6 @@
     <string name="blank_full_name">Full Name Is Empty.</string>
     <string name="blank_username">Username Is Empty.</string>
     <string name="blank_password">Password Is Empty.</string>
+    <string name="sign_up_failed">Something went wrong.</string>
     <string name="wrong_credentials">Wrong username or password.</string>
 </resources>

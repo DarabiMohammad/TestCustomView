@@ -30,7 +30,12 @@ class LoginFragment @Inject constructor() : BaseFragment(), Observer<ResponseWra
 
         when (response) {
 
-            is ResponseWrapper.Data -> mainViewModel.onLogin.value = response.data
+            is ResponseWrapper.Data -> {
+                if (response.data)
+                    mainViewModel.onLogin.value = Unit
+                else
+                    showToast(getString(R.string.wrong_credentials))
+            }
             is ResponseWrapper.Error -> showToast("${response.error.message}")
         }
     }

@@ -62,15 +62,11 @@ class MainActivity : BaseActivity(), Observer<ResponseWrapper<Boolean>> {
         }
 
         mainViewModel.onSigndUp.observe(this) {
-            if (it)
-                navigateTo(binding.mainContainer.id, homeFragment, shouldReplace = true)
+            navigateTo(binding.mainContainer.id, homeFragment, shouldReplace = true)
         }
 
         mainViewModel.onLogin.observe(this) {
-            if (it)
-                navigateTo(binding.mainContainer.id, homeFragment, shouldReplace = true)
-            else
-                showToast(getString(R.string.wrong_credentials))
+            navigateTo(binding.mainContainer.id, homeFragment, shouldReplace = true)
         }
     }
 }

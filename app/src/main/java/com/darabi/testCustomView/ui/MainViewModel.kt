@@ -10,8 +10,8 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor() : BaseViewModel() {
 
     val onFragmentBackPressed by lazy { MutableLiveData<String>() }
-    val onSigndUp by lazy { MutableLiveData<Boolean>() }
-    val onLogin by lazy { MutableLiveData<Boolean>() }
+    val onSigndUp by lazy { MutableLiveData<Unit>() }
+    val onLogin by lazy { MutableLiveData<Unit>() }
 
     fun checkSessionStatus() = liveData {
         emit(repository.isSignedUp())
