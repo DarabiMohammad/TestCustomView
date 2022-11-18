@@ -26,6 +26,14 @@ class SignUpFragment @Inject constructor() : BaseFragment(), Observer<ResponseWr
         initViews()
     }
 
+    override fun onChanged(response: ResponseWrapper<Boolean>) {
+        when (response) {
+
+            is ResponseWrapper.Data -> mainViewModel.onSigndUp.value = response.data
+            is ResponseWrapper.Error -> showToast("${response.error.message}")
+        }
+    }
+
     private fun initViews() {
 
         binding.btnSignUp.setOnClickListener {
@@ -44,16 +52,8 @@ class SignUpFragment @Inject constructor() : BaseFragment(), Observer<ResponseWr
                     binding.edtUsername.text.toString(),
                     binding.edtPassword.text.toString()
                 )
-                viewModel.signUp(session).observe(viewLifecycleOwner, this@SignUpFragment)
+                viewModel.signUp(session).observe(viewLifecycleOwner, this)
             }
-        }
-    }
-
-    override fun onChanged(response: ResponseWrapper<Boolean>) {
-        when (response) {
-
-            is ResponseWrapper.Data -> mainViewModel.onSignedUp.value = response.data
-            is ResponseWrapper.Error -> showToast("${response.error.message}")
         }
     }
 }

@@ -16,6 +16,7 @@
 
         <activity
             android:name="com.darabi.testCustomView.ui.MainActivity"
+            android:screenOrientation="nosensor"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

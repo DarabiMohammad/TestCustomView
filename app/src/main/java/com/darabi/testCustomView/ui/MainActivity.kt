@@ -3,6 +3,7 @@ package com.darabi.testCustomView.ui
 import android.os.Bundle
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
+import com.darabi.custombutton.R
 import com.darabi.custombutton.databinding.ActivityMainBinding
 import com.darabi.testCustomView.repository.ResponseWrapper
 import com.darabi.testCustomView.ui.base.BaseActivity
@@ -12,8 +13,6 @@ import com.darabi.testCustomView.ui.login.LoginFragment
 import com.darabi.testCustomView.ui.signup.SignUpFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import kotlin.math.log
-import kotlin.math.sign
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity(), Observer<ResponseWrapper<Boolean>> {
@@ -45,7 +44,7 @@ class MainActivity : BaseActivity(), Observer<ResponseWrapper<Boolean>> {
                     loginFragment
                 else
                     signUpFragment
-                navigateTo(binding.mainContainer.id, fragment = destination, shouldReplace = true)
+                navigateTo(binding.mainContainer.id, fragment = destination, addToBackStack = true, shouldReplace = true)
             }
 
             is ResponseWrapper.Error -> showToast("${response.error.message}")
@@ -62,9 +61,16 @@ class MainActivity : BaseActivity(), Observer<ResponseWrapper<Boolean>> {
                 supportFragmentManager.popBackStack(it, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
 
-        mainViewModel.onSignedUp.observe(this) {
+        mainViewModel.onSigndUp.observe(this) {
             if (it)
                 navigateTo(binding.mainContainer.id, homeFragment, shouldReplace = true)
+        }
+
+        mainViewModel.onLogin.observe(this) {
+            if (it)
+                navigateTo(binding.mainContainer.id, homeFragment, shouldReplace = true)
+            else
+                showToast(getString(R.string.wrong_credentials))
         }
     }
 }

@@ -77,13 +77,12 @@ abstract class BaseActivity : AppCompatActivity() {
             return
         else supportFragmentManager.beginTransaction().also {
             if (shouldReplace) {
+                firstAddedFragmentTag = fragment.fragmentTag
                 if (addToBackStack)
                     it.addToBackStack(fragment.fragmentTag)
                         .replace(containerId, fragment, fragment.fragmentTag)
-                else {
-                    firstAddedFragmentTag = fragment.fragmentTag
+                else
                     it.replace(containerId, fragment, fragment.fragmentTag)
-                }
             } else {
                 if (addToBackStack)
                     it.addToBackStack(fragment.fragmentTag)
