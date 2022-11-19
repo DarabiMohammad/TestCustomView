@@ -12,10 +12,9 @@
             <flag name="bottom" value="0x00002001"/>
         </attr>
 
+        <attr name="textSize" format="dimension"/>
         <attr name="text" format="string"/>
-
         <attr name="subtext" format="string"/>
-
         <attr name="rippleEnabled" format="boolean"/>
     </declare-styleable>
 
