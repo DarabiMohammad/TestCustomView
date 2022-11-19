@@ -76,8 +76,8 @@ abstract class BaseActivity : AppCompatActivity() {
         if (fragment.isAdded)
             return
         else supportFragmentManager.beginTransaction().also {
+            firstAddedFragmentTag = fragment.fragmentTag
             if (shouldReplace) {
-                firstAddedFragmentTag = fragment.fragmentTag
                 if (addToBackStack)
                     it.addToBackStack(fragment.fragmentTag)
                         .replace(containerId, fragment, fragment.fragmentTag)
@@ -90,7 +90,7 @@ abstract class BaseActivity : AppCompatActivity() {
                 else
                     it.add(containerId, fragment, fragment.fragmentTag)
             }
-        }.commitAllowingStateLoss()
+        }.commitNowAllowingStateLoss()
     }
 
     protected fun showToast(message: String) = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()

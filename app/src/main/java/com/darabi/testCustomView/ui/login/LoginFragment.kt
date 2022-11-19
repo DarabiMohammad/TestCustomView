@@ -1,11 +1,13 @@
 package com.darabi.testCustomView.ui.login
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.darabi.custombutton.R
 import com.darabi.custombutton.databinding.FragmentLoginBinding
+import com.darabi.testCustomView.model.SessionState
 import com.darabi.testCustomView.model.UserCredit
 import com.darabi.testCustomView.repository.ResponseWrapper
 import com.darabi.testCustomView.ui.base.BaseFragment
@@ -32,7 +34,7 @@ class LoginFragment @Inject constructor() : BaseFragment(), Observer<ResponseWra
 
             is ResponseWrapper.Data -> {
                 if (response.data)
-                    mainViewModel.onLogin.value = Unit
+                    mainViewModel.sessionState.value = SessionState.LOGGED_IN
                 else
                     showToast(getString(R.string.wrong_credentials))
             }

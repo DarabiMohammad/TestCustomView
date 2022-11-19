@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import com.darabi.custombutton.R
 import com.darabi.custombutton.databinding.FragmentSignUpBinding
 import com.darabi.testCustomView.model.Session
+import com.darabi.testCustomView.model.SessionState
 import com.darabi.testCustomView.repository.ResponseWrapper
 import com.darabi.testCustomView.ui.base.BaseFragment
 import com.darabi.testCustomView.util.hideSoftKeyboard
@@ -31,7 +32,7 @@ class SignUpFragment @Inject constructor() : BaseFragment(), Observer<ResponseWr
 
             is ResponseWrapper.Data -> {
                 if (response.data)
-                    mainViewModel.onSigndUp.value = Unit
+                    mainViewModel.sessionState.value = SessionState.SIGNED_UP
                 else
                     showToast(getString(R.string.sign_up_failed))
             }

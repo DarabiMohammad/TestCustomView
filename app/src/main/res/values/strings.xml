@@ -3,6 +3,7 @@
     <string name="app_name">Custom Button</string>
 
     <string name="login">Login</string>
+    <string name="logout">Logout</string>
     <string name="sign_up">Sign Up</string>
     <string name="full_name">Full Name</string>
     <string name="username">Username</string>
@@ -14,4 +15,6 @@
     <string name="blank_password">Password Is Empty.</string>
     <string name="sign_up_failed">Something went wrong.</string>
     <string name="wrong_credentials">Wrong username or password.</string>
+    <string name="nothing_found">Nothing Found.</string>
+    <string name="welcome_user">Welcome %s</string>
 </resources>
