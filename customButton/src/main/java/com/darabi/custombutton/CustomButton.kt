@@ -2,6 +2,7 @@ package com.darabi.custombutton
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.text.Layout
@@ -9,7 +10,6 @@ import android.text.StaticLayout
 import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.View
-
 
 class CustomButton : View {
 
@@ -50,8 +50,6 @@ class CustomButton : View {
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-
-//        canvas?.drawText(text!!, 10f, 25f, textPaint!!)
 
         canvas?.save()
         canvas?.translate(paddingLeft.toFloat(), paddingTop.toFloat())
@@ -118,13 +116,17 @@ class CustomButton : View {
         isAntiAlias = true
         density = resources.displayMetrics.density
         textSize = this@CustomButton.textSize
+        setBackgroundColor(Color.GRAY)
     }
 
     private fun setupGenerics() {
 
-        staticLayout = StaticLayout(
-            text, textPaint, textPaint!!.measureText(text).toInt(), Layout.Alignment.ALIGN_NORMAL,
-            1.0f, 0f, false
-        )
+        textPaint?.let {
+
+            staticLayout = StaticLayout(
+                text, it, it.measureText(text).toInt(), Layout.Alignment.ALIGN_NORMAL,
+                1.0f, 0f, false
+            )
+        }
     }
 }
