@@ -6,13 +6,17 @@
         <attr name="iconSrc" format="reference"/>
 
         <attr name="iconPosition">
-            <flag name="start" value="0x00000000" />
-            <flag name="top" value="0x00000001" />
-            <flag name="end" value="0x00001001" />
-            <flag name="bottom" value="0x00002001" />
+            <flag name="start" value="0x00000000"/>
+            <flag name="top" value="0x00000001"/>
+            <flag name="end" value="0x00001001"/>
+            <flag name="bottom" value="0x00002001"/>
         </attr>
 
-        <attr name="subtext" format="string" />
+        <attr name="text" format="string"/>
+
+        <attr name="subtext" format="string"/>
+
+        <attr name="rippleEnabled" format="boolean"/>
     </declare-styleable>
 
 </resources>
