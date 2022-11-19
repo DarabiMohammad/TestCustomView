@@ -1,6 +1,7 @@
 package com.darabi.bardia.buildsrc
 
 import org.gradle.api.artifacts.dsl.DependencyHandler
+import org.gradle.kotlin.dsl.project
 
 object Application {
 
@@ -69,14 +70,35 @@ object Dependencies {
         "androidx.test.espresso:espresso-core:${ESPRESSO_VERSION}",
     )
 
+    private val customButtonLibs = listOf(
+
+        // core
+        "androidx.core:core-ktx:${CORE_VERSION}",
+        "androidx.appcompat:appcompat:${APPCOMPAT_VERSION}",
+
+        // design
+        "com.google.android.material:material:${MATERIAL_VERSION}",
+    )
+
+    private val customButtonTestLibs = listOf(
+        "junit:junit:${JUNIT_VERSION}",
+    )
+
+    private val customButtonAndroidTestLibs = listOf(
+        "androidx.test.ext:junit:${ANDROID_JUNIT_VERSION}",
+        "androidx.test.espresso:espresso-core:${ESPRESSO_VERSION}",
+    )
+
     fun DependencyHandler.dependencies() {
 
-        libs.forEach { dependecy ->
-            add(IMPLEMENTATION, dependecy)
+        add(IMPLEMENTATION, project(":customButton"))
+
+        libs.forEach { dependency ->
+            add(IMPLEMENTATION, dependency)
         }
 
-        processors.forEach { proccessor ->
-            add(KAPT, proccessor)
+        processors.forEach { processor ->
+            add(KAPT, processor)
         }
 
         testLibs.forEach { testLib ->
@@ -84,6 +106,21 @@ object Dependencies {
         }
 
         androidTestLibs.forEach { androidTestLib ->
+            add(ANDROID_TEST_IMPLEMENTATION, androidTestLib)
+        }
+    }
+
+    fun DependencyHandler.customButtonDependencies() {
+
+        customButtonLibs.forEach { dependency ->
+            add(IMPLEMENTATION, dependency)
+        }
+
+        customButtonTestLibs.forEach { testLib ->
+            add(TEST_IMPLEMENTATION, testLib)
+        }
+
+        customButtonAndroidTestLibs.forEach { androidTestLib ->
             add(ANDROID_TEST_IMPLEMENTATION, androidTestLib)
         }
     }

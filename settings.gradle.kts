@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-include(":app")
 rootProject.name = "Custom Button"
+include(":app", ":customButton")
