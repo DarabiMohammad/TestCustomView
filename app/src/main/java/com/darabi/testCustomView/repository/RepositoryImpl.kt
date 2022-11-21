@@ -1,10 +1,8 @@
 package com.darabi.testCustomView.repository
 
+import android.os.CountDownTimer
 import com.darabi.testCustomView.cache.Cache
-import com.darabi.testCustomView.model.Profile
-import com.darabi.testCustomView.model.Session
-import com.darabi.testCustomView.model.SessionState
-import com.darabi.testCustomView.model.UserCredit
+import com.darabi.testCustomView.model.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.withContext
@@ -16,9 +14,15 @@ class RepositoryImpl @Inject constructor(
     private val cache: Cache
 ) : Repository {
 
+    private val defaultTimeInterval = 1000L
+    private var timer: CountDownTimer? = null
+
     private val sessionState by lazy { MutableStateFlow(getSessionState()) }
 
     override fun getSessionStateLiveData(): MutableStateFlow<SessionState> = sessionState
+
+    override fun setSessionRestriction(restrictionMode: RestrictionMode) =
+        setRestriction(restrictionMode.timeout)
 
     override suspend fun signUp(session: Session): ResponseWrapper<Unit> =
         updateStateIfNeeded(SessionState.SIGNED_UP, cache.signUp(session))
@@ -35,6 +39,22 @@ class RepositoryImpl @Inject constructor(
 
     private fun getSessionState(): SessionState = cache.isRegistered().run {
         if (this) SessionState.REGISTERED else SessionState.NOT_REGISTERED
+    }
+
+    private fun setRestriction(sessionTimeout: Long) {
+
+        if (sessionState.value == SessionState.TIMEOUT || sessionState.value == SessionState.LOGGED_OUT)
+            return
+
+        timer?.cancel()
+
+        timer = object : AbstractTimer(sessionTimeout, defaultTimeInterval) {
+
+            override fun onFinish() {
+                sessionState.value = SessionState.TIMEOUT
+            }
+
+        }.start()
     }
 
     /**

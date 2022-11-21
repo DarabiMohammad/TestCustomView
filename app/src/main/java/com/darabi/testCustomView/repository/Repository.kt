@@ -1,14 +1,13 @@
 package com.darabi.testCustomView.repository
 
-import com.darabi.testCustomView.model.Profile
-import com.darabi.testCustomView.model.Session
-import com.darabi.testCustomView.model.SessionState
-import com.darabi.testCustomView.model.UserCredit
+import com.darabi.testCustomView.model.*
 import kotlinx.coroutines.flow.MutableStateFlow
 
 interface Repository {
 
     fun getSessionStateLiveData(): MutableStateFlow<SessionState>
+
+    fun setSessionRestriction(restrictionMode: RestrictionMode)
 
     suspend fun signUp(session: Session): ResponseWrapper<Unit>
 

@@ -1,4 +1,4 @@
-package com.darabi.testCustomView.ui.home
+package com.darabi.testCustomView.repository
 
 import android.os.CountDownTimer
 
