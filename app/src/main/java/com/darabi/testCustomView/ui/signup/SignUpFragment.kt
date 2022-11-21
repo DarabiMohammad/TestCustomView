@@ -16,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SignUpFragment @Inject constructor() : BaseFragment(), Observer<ResponseWrapper<Boolean>> {
+class SignUpFragment @Inject constructor() : BaseFragment(), Observer<ResponseWrapper<Unit>> {
 
     private val viewModel: SignUpViewModel by viewModels()
     override val binding by lazy { FragmentSignUpBinding.inflate(layoutInflater) }
@@ -27,16 +27,13 @@ class SignUpFragment @Inject constructor() : BaseFragment(), Observer<ResponseWr
         initViews()
     }
 
-    override fun onChanged(response: ResponseWrapper<Boolean>) {
-        when (response) {
-
-            is ResponseWrapper.Data -> {
-                if (response.data)
-                    mainViewModel.sessionState.value = SessionState.SIGNED_UP
-                else
-                    showToast(getString(R.string.sign_up_failed))
-            }
-            is ResponseWrapper.Error -> showToast("${response.error.message}")
+    /**
+     * all error handling staffs are happened here. we can have some remote or cache specific errors which
+     * are thrown from their layer.
+     */
+    override fun onChanged(response: ResponseWrapper<Unit>) {
+        if (response is ResponseWrapper.Error) {
+            showToast("${response.error.message}")
         }
     }
 

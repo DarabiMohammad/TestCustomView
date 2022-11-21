@@ -10,6 +10,6 @@ import javax.inject.Inject
 class SignUpViewModel @Inject constructor() : BaseViewModel() {
 
     fun signUp(session: Session) = liveData {
-        emit(this@SignUpViewModel.repository.signUp(session))
+        emit(repository.signUp(session))
     }
 }

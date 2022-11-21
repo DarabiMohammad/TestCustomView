@@ -18,10 +18,13 @@ import javax.inject.Inject
 open class MainViewModel @Inject constructor() : BaseViewModel() {
 
     val onFragmentBackPressed by lazy { MutableLiveData<String>() }
-    val sessionState by lazy { repository.sessionState }
+
+    private val sessionState by lazy { repository.getSessionStateLiveData() }
 
     private val defaultTimeInterval = 1000L
     private var timer: CountDownTimer? = null
+
+    fun getSessionStateLiveData() = sessionState
 
     fun initSessionConstraint(constraint: Long) {
 
@@ -33,7 +36,7 @@ open class MainViewModel @Inject constructor() : BaseViewModel() {
         timer = object : AbstractTimer(constraint, defaultTimeInterval) {
 
             override fun onFinish() {
-                sessionState.value = SessionState.TIMEOUT
+                viewModelScope.launch { repository.logout() }
             }
 
         }.start()

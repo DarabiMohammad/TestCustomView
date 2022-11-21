@@ -49,7 +49,7 @@ class MainActivity : BaseActivity() {
 
     private fun collectSessionState() = lifecycleScope.launch {
 
-        mainViewModel.sessionState.collectLatest {
+        mainViewModel.getSessionStateLiveData().collectLatest {
 
             val destination = when (it) {
 

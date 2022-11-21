@@ -17,4 +17,8 @@ class HomeViewModel @Inject constructor() : BaseViewModel() {
     fun getProfile() = liveData {
         emit(repository.getProfile())
     }
+
+    fun logout() = liveData {
+        emit(repository.logout())
+    }
 }

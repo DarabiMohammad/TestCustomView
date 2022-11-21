@@ -61,7 +61,11 @@ class HomeFragment @Inject constructor() : BaseFragment(), Observer<ResponseWrap
 
         binding.btnLogout.setOnClickListener {
 
-            mainViewModel.sessionState.value = SessionState.LOGGED_OUT
+            viewModel.logout().observe(viewLifecycleOwner) { response ->
+                if (response is ResponseWrapper.Error) {
+                    showToast("${response.error.message}")
+                }
+            }
         }
     }
 }

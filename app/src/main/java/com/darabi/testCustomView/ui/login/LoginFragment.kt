@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LoginFragment @Inject constructor() : BaseFragment(), Observer<ResponseWrapper<Boolean>> {
+class LoginFragment @Inject constructor() : BaseFragment(), Observer<ResponseWrapper<Unit>> {
 
     private val viewModel: LoginViewModel by viewModels()
     override val binding by lazy { FragmentLoginBinding.inflate(layoutInflater) }
@@ -29,17 +29,9 @@ class LoginFragment @Inject constructor() : BaseFragment(), Observer<ResponseWra
         initViews()
     }
 
-    override fun onChanged(response: ResponseWrapper<Boolean>) {
-
-        when (response) {
-
-            is ResponseWrapper.Data -> {
-                if (response.data)
-                    mainViewModel.sessionState.value = SessionState.LOGGED_IN
-                else
-                    showToast(getString(R.string.wrong_credentials))
-            }
-            is ResponseWrapper.Error -> showToast("${response.error.message}")
+    override fun onChanged(response: ResponseWrapper<Unit>) {
+        if (response is ResponseWrapper.Error) {
+            showToast("${response.error.message}")
         }
     }
 
