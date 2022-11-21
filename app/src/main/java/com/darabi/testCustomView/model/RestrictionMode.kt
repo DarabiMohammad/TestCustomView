@@ -6,11 +6,11 @@ sealed class RestrictionMode {
 
     object Foreground : RestrictionMode() {
         override val timeout: Long
-            get() = 3000L
+            get() = 30000L
     }
 
     object Background : RestrictionMode() {
         override val timeout: Long
-            get() = 3000L
+            get() = 10000L
     }
 }
