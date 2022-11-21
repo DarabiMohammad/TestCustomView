@@ -22,8 +22,6 @@ import javax.inject.Inject
 class HomeFragment @Inject constructor() : BaseFragment(), Observer<ResponseWrapper<Profile>> {
 
     private val viewModel: HomeViewModel by viewModels()
-    private val foregroundTimeout = 30000L
-    private val backgroundTimeout = 10000L
 
     override val binding by lazy { FragmentHomeBinding.inflate(layoutInflater) }
 
@@ -37,13 +35,13 @@ class HomeFragment @Inject constructor() : BaseFragment(), Observer<ResponseWrap
     override fun onResume() {
         super.onResume()
 
-        mainViewModel.initSessionConstraint(foregroundTimeout)
+        mainViewModel.setForegroundRestriction()
     }
 
     override fun onStop() {
         super.onStop()
 
-        mainViewModel.initSessionConstraint(backgroundTimeout)
+        mainViewModel.setBackgroundRestriction()
     }
 
     override fun onChanged(response: ResponseWrapper<Profile>) {
@@ -62,6 +60,7 @@ class HomeFragment @Inject constructor() : BaseFragment(), Observer<ResponseWrap
         binding.btnLogout.setOnClickListener {
 
             viewModel.logout().observe(viewLifecycleOwner) { response ->
+
                 if (response is ResponseWrapper.Error) {
                     showToast("${response.error.message}")
                 }
